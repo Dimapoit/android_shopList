@@ -1,4 +1,4 @@
-package com.dm_blinov.udemyshoplist.presentation
+package com.dm_blinov.udemyshoplist.presentation.shoplist
 
 import android.view.View
 import android.widget.TextView
