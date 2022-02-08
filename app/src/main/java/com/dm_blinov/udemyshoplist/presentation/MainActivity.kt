@@ -7,11 +7,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.dm_blinov.udemyshoplist.R
-import com.dm_blinov.udemyshoplist.domain.ShopItem
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var viewModel: MainVieModel
+    lateinit var viewModel: MainViewModel
     lateinit var shopListAdapter: ShopListAdapter
 
     var count = 0
@@ -20,20 +19,17 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
         initRecyclerView()
-        viewModel = ViewModelProvider(this).get(MainVieModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.shopList.observe(this) {
-            shopListAdapter.shopList = it
+            //shopListAdapter.shopList = it
+            shopListAdapter.submitList(it)
         }
     }
 
     fun initRecyclerView() {
         val rvShopList = findViewById<RecyclerView>(R.id.rv_shop_list)
         shopListAdapter = ShopListAdapter()
-//        shopListAdapter.onShopItemLongClickListener = object : ShopListAdapter.OnShopItemLongClickListener {
-//            override fun onShopITemLongClick(shopItem: ShopItem) {
-//                viewModel.editShopItem(shopItem)
-//            }
-//        }
+
         rvShopList.adapter = shopListAdapter
         rvShopList.recycledViewPool.setMaxRecycledViews(
             ShopListAdapter.VIEW_TYPE_ENABLED,
@@ -63,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val item = shopListAdapter.shopList[viewHolder.adapterPosition]
+                val item = shopListAdapter.currentList[viewHolder.adapterPosition]
                 viewModel.deleteShopItem(item)
             }
         }
@@ -75,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initClickListener() {
         shopListAdapter.onShopItemClick = {
-            Log.d("onShopItemClick", "${it.name}")
+            Log.d("onShopItemClick", it.toString())
         }
     }
 
