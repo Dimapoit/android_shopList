@@ -8,7 +8,7 @@ import com.dm_blinov.udemyshoplist.domain.EditShopItemUseCase
 import com.dm_blinov.udemyshoplist.domain.GetShopListUseCase
 import com.dm_blinov.udemyshoplist.domain.ShopItem
 
-class MainVieModel: ViewModel() {
+class MainViewModel: ViewModel() {
 
     private val repository = ShopListRepositoryImpl
 
