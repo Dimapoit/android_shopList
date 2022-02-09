@@ -13,12 +13,8 @@ class ShopItemViewModel : ViewModel() {
     private val addShopItemUseCase = AddShopItemUseCase(repository)
     private val editShopItemUseCase = EditShopItemUseCase(repository)
 
-    //С MutableLiveData работаем только во ViewModel
-    private val _errorInputName = MutableLiveData<Boolean>()
 
-    //Создаем переменную LiveData, чтоб не было возможности ее изменения из activity,
-    //и переопределяем у нее геттер для возможности подписаться на данную LiveData,
-    //в которой уже нельзя будет установить новое значение.
+    private val _errorInputName = MutableLiveData<Boolean>()
     val errorInputName: LiveData<Boolean>
         get() = _errorInputName
 
@@ -66,12 +62,12 @@ class ShopItemViewModel : ViewModel() {
     }
 
     //Функция сброса ошибки ввода name
-    private fun resetErrorInputName() {
+    fun resetErrorInputName() {
         _errorInputName.value = false
     }
 
     //Функция сброса ошибки ввода count
-    private fun resetErrorInputCount() {
+    fun resetErrorInputCount() {
         _errorInputCount.value = false
     }
 
