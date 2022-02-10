@@ -10,7 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UdemyShopList">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.shopitem.ShopItemActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.shoplist.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

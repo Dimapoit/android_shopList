@@ -1,4 +1,4 @@
-package com.dm_blinov.udemyshoplist.presentation
+package com.dm_blinov.udemyshoplist.presentation.shoplist
 
 import android.util.Log
 import android.view.LayoutInflater

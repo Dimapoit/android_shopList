@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">UdemyShopList</string>
+    <string name="shopItemName">Name</string>
+    <string name="shopItemCount">Count</string>
+    <string name="shopItemSaveButton">Save</string>
+    <string name="add_new_shop_item">Add new shop item</string>
 </resources>

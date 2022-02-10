@@ -1,4 +1,4 @@
-package com.dm_blinov.udemyshoplist.presentation
+package com.dm_blinov.udemyshoplist.presentation.shoplist
 
 import androidx.recyclerview.widget.DiffUtil
 import com.dm_blinov.udemyshoplist.domain.ShopItem
