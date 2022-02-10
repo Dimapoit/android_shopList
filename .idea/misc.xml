@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/UdemyShopList/app/src/main/res/layout-land/activity_main.xml" value="0.22" />
         <entry key="..\:/Android/UdemyShopList/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Android/UdemyShopList/app/src/main/res/layout/activity_shop_item.xml" value="0.20969202898550723" />
         <entry key="..\:/Android/UdemyShopList/app/src/main/res/layout/fragment_shop_item_fragment.xml" value="0.2758152173913043" />

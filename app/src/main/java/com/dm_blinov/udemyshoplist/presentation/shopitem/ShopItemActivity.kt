@@ -5,13 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.dm_blinov.udemyshoplist.R
 import com.dm_blinov.udemyshoplist.databinding.ActivityShopItemBinding
 import com.dm_blinov.udemyshoplist.domain.ShopItem
 
-class ShopItemActivity : AppCompatActivity() {
+class ShopItemActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
 
     //    private lateinit var shopItemViewModel: ShopItemViewModel
 
@@ -23,7 +24,7 @@ class ShopItemActivity : AppCompatActivity() {
         setContentView(R.layout.activity_shop_item)
         parseIntent()
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             val fragment = when (screenMode) {
                 MODE_ADD -> ShopItemFragment.newInstanceAddFragment()
                 MODE_EDIT -> ShopItemFragment.newInstanceEditFragment(shopItemId)
@@ -72,5 +73,12 @@ class ShopItemActivity : AppCompatActivity() {
             intent.putExtra(EXTRA_SHOP_ITEM_ID, shopItemId)
             return intent
         }
+    }
+
+    override fun onEditingFinished() {
+
+        Toast.makeText(this, "Succsess", Toast.LENGTH_LONG).show()
+        finish()
+
     }
 }

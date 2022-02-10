@@ -20,12 +20,25 @@ class ShopItemFragment : Fragment() {
 
     private lateinit var shopItemViewModel: ShopItemViewModel
     private lateinit var _binding: FragmentShopItemBinding
+    private lateinit var onEditingFinishedListener: OnEditingFinishedListener
 
     private var screenMode: String = MODE_UNKNOWN
     private var shopItemId: Int = ShopItem.UNDEFINED_ID
 
+    override fun onAttach(context: Context) {
+        Log.d("lifecycleFragment", "onAttach")
+        super.onAttach(context)
+        if(context is OnEditingFinishedListener) {
+            onEditingFinishedListener = context
+        } else {
+            throw java.lang.RuntimeException("Activity must implement OnEditingFinishedListener")
+        }
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("debug", "ShopItemFragment - onCreate")
+        Log.d("lifecycleFragment", "onCreate")
         super.onCreate(savedInstanceState)
         parseParams()
     }
@@ -34,6 +47,7 @@ class ShopItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("lifecycleFragment", "onCreateView")
         // Inflate the layout for this fragment
         _binding = FragmentShopItemBinding.inflate(inflater, container, false)
         return _binding.root
@@ -43,7 +57,7 @@ class ShopItemFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         shopItemViewModel = ViewModelProvider(this).get(ShopItemViewModel::class.java)
-
+        Log.d("lifecycleFragment", "onViewCreated")
         Log.d("debug", "screenMode: $screenMode")
         Log.d("debug", "shopItemId: $shopItemId")
         when (screenMode) {
@@ -52,6 +66,41 @@ class ShopItemFragment : Fragment() {
         }
         addTextChangedListeners()
         addObserve()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("lifecycleFragment", "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("lifecycleFragment", "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("lifecycleFragment", "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("lifecycleFragment", "onStop")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("lifecycleFragment", "onDestroyView")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("lifecycleFragment", "onDestroy")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("lifecycleFragment", "onDetach")
     }
 
     private fun addObserve() {
@@ -64,7 +113,8 @@ class ShopItemFragment : Fragment() {
             _binding.etCount.error = message
         }
         shopItemViewModel.shouldCloseScreen.observe(viewLifecycleOwner) {
-            activity?.onBackPressed()
+            //activity?.onBackPressed()
+            onEditingFinishedListener.onEditingFinished()
         }
     }
 
@@ -129,6 +179,10 @@ class ShopItemFragment : Fragment() {
             }
         }
         shopItemId = args.getInt(SHOP_ITEM_ID, ShopItem.UNDEFINED_ID)
+    }
+
+    interface OnEditingFinishedListener {
+        fun onEditingFinished()
     }
 
     //NewIntent
