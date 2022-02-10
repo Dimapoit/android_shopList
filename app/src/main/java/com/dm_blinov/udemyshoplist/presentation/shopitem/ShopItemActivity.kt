@@ -23,12 +23,17 @@ class ShopItemActivity : AppCompatActivity() {
         setContentView(R.layout.activity_shop_item)
         parseIntent()
 
-        val fragment = when (screenMode) {
-            MODE_ADD -> ShopItemFragment.newInstanceAddFragment()
-            MODE_EDIT -> ShopItemFragment.newInstanceEditFragment(shopItemId)
-            else -> throw RuntimeException("Unknown screen mode $screenMode")
+        if(savedInstanceState == null) {
+            val fragment = when (screenMode) {
+                MODE_ADD -> ShopItemFragment.newInstanceAddFragment()
+                MODE_EDIT -> ShopItemFragment.newInstanceEditFragment(shopItemId)
+                else -> throw RuntimeException("Unknown screen mode $screenMode")
+            }
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.shop_item_container, fragment)
+                .commit()
         }
-        supportFragmentManager.beginTransaction().add(R.id.shop_item_container, fragment).commit()
+
     }
 
     //Проверка наличия и корректности параметров intent
