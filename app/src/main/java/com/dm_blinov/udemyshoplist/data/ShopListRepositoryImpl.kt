@@ -1,6 +1,7 @@
 package com.dm_blinov.udemyshoplist.data
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dm_blinov.udemyshoplist.domain.ShopItem
 import com.dm_blinov.udemyshoplist.domain.ShopListRepository
@@ -22,7 +23,7 @@ object ShopListRepositoryImpl: ShopListRepository {
         }
     }
 
-    override fun getShopList(): MutableLiveData<List<ShopItem>> {
+    override fun getShopList(): LiveData<List<ShopItem>> {
         return shopListLD
     }
 
