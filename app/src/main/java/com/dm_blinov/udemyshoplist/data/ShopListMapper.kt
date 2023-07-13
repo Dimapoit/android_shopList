@@ -1,8 +1,9 @@
 package com.dm_blinov.udemyshoplist.data
 
 import com.dm_blinov.udemyshoplist.domain.ShopItem
+import javax.inject.Inject
 
-class ShopListMapper {
+class ShopListMapper @Inject constructor() {
 
     fun mapEntityToDbModel(shopItem: ShopItem): ShopItemDbModel = ShopItemDbModel(
         id = shopItem.id,

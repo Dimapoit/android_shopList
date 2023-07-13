@@ -1,17 +1,15 @@
 package com.dm_blinov.udemyshoplist.data
 
-import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.*
 import com.dm_blinov.udemyshoplist.domain.ShopItem
 import com.dm_blinov.udemyshoplist.domain.ShopListRepository
+import javax.inject.Inject
 
-class ShopListRoomRepositoryImpl(application: Application) : ShopListRepository {
+class ShopListRoomRepositoryImpl @Inject constructor(
 
-    private val shopListDao = AppDatabase.getInstance(application).shopListDao()
-    private val mapper = ShopListMapper()
+    private val shopListDao: ShopListDao,
+    private val mapper: ShopListMapper
+) : ShopListRepository {
 
 //    override fun getShopList(): LiveData<List<ShopItem>> =
 //        MediatorLiveData<List<ShopItem>>().apply {
@@ -21,9 +19,14 @@ class ShopListRoomRepositoryImpl(application: Application) : ShopListRepository 
 //        }
 
     override fun getShopList(): LiveData<List<ShopItem>> =
-        Transformations.map(shopListDao.getShopList()) {
-            mapper.mapListDbModelToListEntity(it)
+//        Transformations.map(shopListDao.getShopList()) {
+//            mapper.mapListDbModelToListEntity(it)
+        shopListDao.getShopList().map {
+            it.map {
+                mapper.mapDbModelToEntity(it)
+            }
         }
+
 
     override fun getShopItem(id: Int): ShopItem {
         val shopDbModel = shopListDao.getShopItem(id)

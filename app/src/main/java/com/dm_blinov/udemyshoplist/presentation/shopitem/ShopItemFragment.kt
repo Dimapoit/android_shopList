@@ -1,7 +1,6 @@
 package com.dm_blinov.udemyshoplist.presentation.shopitem
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,15 +10,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewTreeLifecycleOwner
-import com.dm_blinov.udemyshoplist.R
 import com.dm_blinov.udemyshoplist.databinding.FragmentShopItemBinding
 import com.dm_blinov.udemyshoplist.domain.ShopItem
+import com.dm_blinov.udemyshoplist.presentation.ShopListApplication
+import com.dm_blinov.udemyshoplist.presentation.ViewModelFactory
+import javax.inject.Inject
 
 
 class ShopItemFragment : Fragment() {
 
     private lateinit var shopItemViewModel: ShopItemViewModel
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (requireActivity().application as ShopListApplication).component
+    }
 
 
     private var _binding: FragmentShopItemBinding? = null
@@ -32,6 +39,7 @@ class ShopItemFragment : Fragment() {
     private var shopItemId: Int = ShopItem.UNDEFINED_ID
 
     override fun onAttach(context: Context) {
+        component.inject(this)
         Log.d("lifecycleFragment", "onAttach")
         super.onAttach(context)
         if(context is OnEditingFinishedListener) {
@@ -61,7 +69,7 @@ class ShopItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        shopItemViewModel = ViewModelProvider(this).get(ShopItemViewModel::class.java)
+        shopItemViewModel = ViewModelProvider(this, viewModelFactory).get(ShopItemViewModel::class.java)
 
         binding.viewModel = shopItemViewModel
         binding.lifecycleOwner = viewLifecycleOwner

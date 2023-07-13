@@ -3,16 +3,14 @@ package com.dm_blinov.udemyshoplist.presentation.shopitem
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dm_blinov.udemyshoplist.data.ShopListRepositoryImpl
 import com.dm_blinov.udemyshoplist.domain.*
+import javax.inject.Inject
 
-class ShopItemViewModel : ViewModel() {
-
-    private val repository = ShopListRepositoryImpl
-    private val getShopItemUseVase = GetShopItemUseCase(repository)
-    private val addShopItemUseCase = AddShopItemUseCase(repository)
-    private val editShopItemUseCase = EditShopItemUseCase(repository)
-
+class ShopItemViewModel @Inject constructor (
+    private val addShopItemUseCase: AddShopItemUseCase,
+    private  val getShopItemUseCase: GetShopItemUseCase,
+    private val editShopItemUseCase: EditShopItemUseCase
+) : ViewModel() {
 
     private val _errorInputName = MutableLiveData<Boolean>()
     val errorInputName: LiveData<Boolean>
@@ -99,7 +97,7 @@ class ShopItemViewModel : ViewModel() {
     }
 
     fun getShopItem(id: Int) {
-        val item = getShopItemUseVase.getShopItem(id)
+        val item = getShopItemUseCase.getShopItem(id)
         _shopItem.value = item
     }
 
