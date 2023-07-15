@@ -3,7 +3,9 @@ package com.dm_blinov.udemyshoplist.presentation.shopitem
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.dm_blinov.udemyshoplist.domain.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ShopItemViewModel @Inject constructor (
@@ -75,9 +77,11 @@ class ShopItemViewModel @Inject constructor (
         val count = parseCount(inputCount)
         val fieldsValid = validateInput(name, count)
         if (fieldsValid) {
-            val item = ShopItem(name = name, count = count, enabled = true)
-            addShopItemUseCase.addShopItem(item)
-            finishWork()
+            viewModelScope.launch {
+                val item = ShopItem(name = name, count = count, enabled = true)
+                addShopItemUseCase.addShopItem(item)
+                finishWork()
+            }
         }
     }
 
@@ -89,16 +93,21 @@ class ShopItemViewModel @Inject constructor (
         if (fieldsValid) {
 
             _shopItem.value?.let {
-                val item = it.copy(name = name, count = count)
-                editShopItemUseCase.editShopItem(item)
-                finishWork()
+                viewModelScope.launch {
+                    val item = it.copy(name = name, count = count)
+                    editShopItemUseCase.editShopItem(item)
+                    finishWork()
+                }
             }
         }
     }
 
     fun getShopItem(id: Int) {
-        val item = getShopItemUseCase.getShopItem(id)
-        _shopItem.value = item
+
+        viewModelScope.launch {
+            val item = getShopItemUseCase.getShopItem(id)
+            _shopItem.value = item
+        }
     }
 
     private fun finishWork() {

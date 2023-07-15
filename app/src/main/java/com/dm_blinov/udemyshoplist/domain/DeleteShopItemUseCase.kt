@@ -6,7 +6,7 @@ class DeleteShopItemUseCase @Inject constructor (
     private val shopListRepository: ShopListRepository
     ) {
 
-    fun deleteShopItem(shopItem: ShopItem) {
+    suspend fun deleteShopItem(shopItem: ShopItem) {
         shopListRepository.deleteShopItem(shopItem)
     }
 }
